@@ -7,6 +7,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib
+import matplotlib.font_manager as fm
 
 # 출력 옵션
 pd.set_option('display.unicode.east_asian_width', True)
@@ -454,3 +456,53 @@ df['위험점수'] = (
 
 print('\n[위험점수]')
 print(df[['환자ID', '위험점수']])
+
+
+# =====================================
+# [5] 시각화
+# =====================================
+
+print('=====================================')
+print('[5] 시각화')
+print('=====================================')
+
+# ---------------------------------------------------
+# 5-1) 혈압(SBP/DBP) 분포 히스토그램
+# ---------------------------------------------------
+'''
+히스토그램
+- 숫자 데이터가 어느 구간에 얼마나 많이 모여 있는지 보여주는 그래프
+- bin이 크면 클 수록 나뉘는 구간이 촘촘함
+- 구간 수에 따라 그래프 모양이 달라짐
+'''
+
+# 원하는 폰트 파일 경로 문자열로 입력
+font_location = r'C:\Windows\Fonts\H2GTRM.TTF'
+
+# 지정한 폰트 파일 경로에서 폰트 추출
+fontname = fm.FontProperties(
+    fname=font_location
+).get_name()
+
+# matplotlib의 전역 폰트 설정 변경
+matplotlib.rc('font', family=fontname)
+
+plt.figure() # 그래프 공간 생성
+plt.hist(df['SBP(수축기)'], bins=8) # 구간 설정
+plt.title('SBP DIST') # 그래프 위 제목(수축기 혈압(SBP) 분포)
+plt.xlabel('SBP(mmHg)') # 가로축 의미 설명
+plt.ylabel('frequency') # 세로축 의미 설명(빈도)
+plt.tight_layout() # 글자가 잘리지 않게 자동 정렬
+# plt.show()
+
+plt.figure()
+plt.hist(df['DBP(이완기)'], bins=8) # 구간 설정
+plt.title('DBP DIST') # 그래프 위 제목(이완기 혈압(DBP) 분포)
+plt.xlabel('DBP(mmHg)')
+plt.ylabel('frequency')
+plt.tight_layout()
+# plt.show()
+
+# ---------------------------------------------------
+# 5-2) 혈압분류별 평균 SBP 막대그래프
+# ---------------------------------------------------
